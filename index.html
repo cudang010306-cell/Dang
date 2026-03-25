@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kèo nhậu</title>
+
+  <style>
+    body {
+      background: black;
+      color: #00ffcc;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h1 {
+      font-size: 8vw;
+    }
+
+    p {
+      font-size: 5vw;
+      min-height: 40px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 5vw;
+      background: transparent;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      cursor: pointer;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h1>⚡ REQUEST ⚡</h1>
+    <p id="text"></p>
+
+    <button onclick="yes()">Chấp nhận</button>
+    <button id="noBtn">Không 😏</button>
+  </div>
+
+  <!-- preload audio -->
+  <audio id="sound" preload="auto">
+    <source src="https://www.soundjay.com/human/sounds/applause-8.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // typing effect
+    const message = "Cho xin 1 ngày rảnh... Mục đích: NHẬU 🍻";
+    let i = 0;
+
+    function typing() {
+      if (i < message.length) {
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typing, 40);
+      }
+    }
+    typing();
+
+    // unlock audio (quan trọng cho iPhone)
+    document.body.addEventListener("click", () => {
+      const audio = document.getElementById("sound");
+      audio.play().then(() => {
+        audio.pause();
+        audio.currentTime = 0;
+      }).catch(() => {});
+    }, { once: true });
+
+    function yes() {
+      const audio = document.getElementById("sound");
+
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+
+      document.body.innerHTML = `
+        <div class="box">
+          <h1>🔥 KÈO ĐÃ CHỐT 🔥</h1>
+          <p>Không say không về 😏🍻</p>
+        </div>
+      `;
+    }
+
+    // nút chạy trốn
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("touchstart", moveButton);
+    noBtn.addEventListener("mouseover", moveButton);
+
+    function moveButton() {
+      const x = Math.random() * window.innerWidth * 0.7;
+      const y = Math.random() * window.innerHeight * 0.7;
+
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+  </script>
+</body>
+</html>
